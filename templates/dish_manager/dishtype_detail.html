@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} {{ dishtype.name }} {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} blog-author bg-gray-100 {% endblock body_class %}
+
+{% block content %}
+
+  {% include "includes/navigation.html" %}
+
+  <section class="py-sm-5 py-5 position-relative">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mx-auto">
+          <div class="row pt-7">
+
+            <div class="col-md-9 col-sm-6 col-6 mb-4">
+              <h1>{{ dishtype.name }}</h1>
+            </div>
+
+          </div>
+          <div class="row mb-4">
+            <div class="col-auto">
+              <span>Dishes:</span>
+              <ul>
+                {% for dish in dishtype.dishes.all %}
+                <li><a href="{% url "dish_manager:dish-detail" pk=dish.id %} ">{{ dish.name }}</a></li>
+                {% empty %}
+                <li>No dishes have been added to this category yet.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+{% endblock %}
