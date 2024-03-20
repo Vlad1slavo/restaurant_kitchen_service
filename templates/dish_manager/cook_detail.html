@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %} {{ cook.username }} {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} blog-author bg-gray-100 {% endblock body_class %}
+
+{% block content %}
+
+  {% include "includes/navigation.html" %}
+
+  <section class="py-sm-5 py-5 position-relative">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mx-auto">
+          <div class="row pt-7">
+            <h1>
+              {{ cook.first_name }} {{ cook.last_name }}
+              <div class="me-4 m-3 float-end">
+                <a href="{% url 'dish_manager:cook-update' pk=cook.id %}" class="btn btn-sm btn-outline-info w-auto">
+                  Update
+                </a>
+                <a href="{% url 'dish_manager:cook-delete' pk=cook.id %}" class="btn btn-sm btn-outline-secondary w-auto">
+                  Delete
+                </a>
+              </div>
+            </h1>
+          </div>
+          <div class="row mb-4">
+            <div class="col-auto">
+              <span>Years of experience:</span>
+              <span class="h6">{{ cook.years_of_experience }}</span>
+            </div>
+            <div class="col-auto">
+              <span>Email:</span>
+              <span class="h6">{{ cook.email }}</span>
+            </div>
+            <div class="col-auto">
+              <span>Username:</span>
+              <span class="h6">{{ cook.username }}</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3 class="mb-5 text-gradient text-primary">Dishes:</h3>
+      </div>
+    </div>
+
+    {% for dish in cook.dishes.all %}
+
+      <div class="card-body position-relative border-radius-xl overflow-hidden shadow-lg mb-7">
+        <h5 class="lead text-dark">{{ dish.name }}
+            <p class="card-text float-end"><small class="text-success">{{ dish.price }}</small></p>
+        </h5>
+        <hr>
+        <p class="card-text">
+          {{ dish.description }}
+        </p>
+      </div>
+
+    {% empty %}
+      <p>No Dishes!</p>
+    {% endfor %}
+  </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="/static/assets/js/soft-design-system.min.js?v=1.0.1" type="text/javascript"></script>
+
+{% endblock javascripts %}

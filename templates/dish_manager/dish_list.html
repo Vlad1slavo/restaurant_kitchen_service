@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Dishes{% endblock title %}
+
+{% block content %}
+  {% include "includes/navigation.html" %}
+  <header class="section-height-25">
+  </header>
+  <div class="container">
+    <h1>
+      Dish List
+      <a href="{% url 'dish_manager:dish-create' %}" class="btn bg-gradient-secondary w-auto me-5 m-3 float-end">
+        Create
+      </a>
+    </h1>
+    <br>
+    {% block search %}
+      {% include "includes/search.html" %}
+    {% endblock %}
+    <br>
+    {% if dish_list %}
+
+    <table class="table">
+      <tr>
+        <th class="text-gradient text-primary font-weight-bolder" style="width: 30%">Name</th>
+        <th class="text-gradient text-primary font-weight-bolder" style="width: 18%">Dish type</th>
+        <th class="text-gradient text-primary font-weight-bolder" style="width: 20%">Price</th>
+        <th class="text-gradient text-primary font-weight-bolder" style="width: 16%">Cook</th>
+      </tr>
+    {% for dish in dish_list %}
+      <tr>
+        <td><a href="{% url "dish_manager:dish-detail" pk=dish.id %} ">{{ dish.name }}</a></td>
+        <td>{{ dish.dishtype.name }}</td>
+        <td>{{ dish.price }}</td>
+        <td>{{ dish.cooks.count }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+    {% include "includes/pagination.html" %}
+    {% else %}
+      <p>There are no dishes.</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
